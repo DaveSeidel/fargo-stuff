@@ -48,8 +48,8 @@ exports.index = function(req, res, next) {
     });
   } else {
     res.render('index', {
-      title:  'Moorehead Test Server',
-      usage:   'Usage: http://this.server//?url=ENCODED_URL_OF_EVERNOTE_EXPORT_FILE'
+      title: 'Moorehead Test Server',
+      usage: 'Usage: http://this.server//?url=ENCODED_URL_OF_EVERNOTE_EXPORT_FILE'
     });
   }
 };

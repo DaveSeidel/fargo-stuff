@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<opml version="2.0">
+	<head>
+		<title>fargo-script-loader</title>
+		<ownerName>Dave Seidel</ownerName>
+		<ownerEmail>dave.seidel@gmail.com</ownerEmail>
+		<dateModified>Wed, 24 Apr 2013 23:09:08 GMT</dateModified>
+		<expansionState></expansionState>
+		</head>
+	<body>
+		<outline isComment="true" text="(function(u){console.log(&quot;loading &quot;+u);$.getScript(u).done(function(o,s){console.log(&quot;Done: &quot;+s)}).fail(function(j,s,e){console.log(&quot;Failed: &quot;+s);throw e;});return u;})('http://domain-name.com/script-name.js')"/>
+		</body>
+	</opml>

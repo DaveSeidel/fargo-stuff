@@ -32,40 +32,47 @@ function downloadAndConvert(requestedUrl, callback) {
   });
 }
 
-function usage(res, err) {
-    res.render('index', {
-      title: 'Moorehead Test Server',
-      usage: 'Usage: http://this.server//?url=ENCODED_URL_OF_EVERNOTE_EXPORT_FILE',
-      error: err
-    });
+function sendUsage(res, err) {
+  if (err) {
+    console.log(err);
+  }
+
+  res.render('index', {
+    title: 'Moorehead Test Server',
+    usage: 'Usage: http://this.server//?url=ENCODED_URL_OF_EVERNOTE_EXPORT_FILE',
+    error: err
+  });
+}
+
+function sendOpml(res, opml) {
+  res.set("Content-Type", "text/xml");
+  res.send(200, opml);
+  res.end();
 }
 
 // GET
 exports.index = function(req, res, next) {
   var url = req.query.url
+
   if (null != url && url.length > 0) {
     downloadAndConvert(url, function(status) {
       var e = null;
       if (status.networkError) {
         var e = new Error(status.networkError);
         e.message = "Network error. Requested URL: \"" + url + "\"\n" + e.message;
-        console.log(e);
       } else if (status.convertError ) {
         var e = new Error(status.convertError);
         e.message = "Parser or conversion error\n" + e.message;
-        console.log(e);
       } else {
         console.log("Writing response...");
-        res.set("Content-Type", "text/xml");
-        res.send(200, status.opml);
-        res.end();
+        sendOpml(res, status.opml);
       }
       if (e) {
-        usage(res, e);
+        sendUsage(res, e);
       }
     });
   } else {
-    usage(res);
+    sendUsage(res);
   }
 };
 
